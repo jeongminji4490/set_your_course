@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/img_title"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/tx_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/gym"/>
+
+    <TextView
+        android:id="@+id/tx_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/card_view_squat"
+        android:text="@string/set_your_course"
+        android:textSize="35dp"
+        android:textStyle="bold|italic"
+        android:textColor="@color/black"
+        android:textAlignment="center"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_squat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toTopOf="@id/card_view_push_up"
+        app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/deep_salmon">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tx_squat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/squat"
+                android:textSize="30dp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+
+            <EditText
+                android:id="@+id/edt_squat_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_push_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/deep_salmon">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tx_push_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/push_up"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic"/>
+
+            <EditText
+                android:id="@+id/edt_push_up_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/black"
+                android:textColorHint="@color/white" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@id/card_view_push_up">
+
+        <ImageView
+            android:id="@+id/img_mul"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@id/tx_set_count"
+            app:layout_constraintTop_toTopOf="@id/tx_set_count"
+            app:layout_constraintBottom_toBottomOf="@id/tx_set_count"
+            android:src="@drawable/multiply"/>
+
+        <TextView
+            android:id="@+id/tx_set_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/default_set_count"
+            android:textSize="35dp"
+            android:textStyle="bold"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"/>
+
+        <ImageButton
+            android:id="@+id/btn_up_count"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintEnd_toStartOf="@id/btn_down_count"
+            app:layout_constraintTop_toTopOf="@id/tx_set_count"
+            app:layout_constraintBottom_toBottomOf="@id/tx_set_count"
+            android:src="@drawable/arrow_up"
+            android:scaleType="fitCenter"
+            android:background="#00ff0000"/>
+
+        <ImageButton
+            android:id="@+id/btn_down_count"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tx_set_count"
+            app:layout_constraintBottom_toBottomOf="@id/tx_set_count"
+            android:src="@drawable/arrow_down"
+            android:scaleType="fitCenter"
+            android:background="#00ff0000"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/btn_start"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/start"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/view_set"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
