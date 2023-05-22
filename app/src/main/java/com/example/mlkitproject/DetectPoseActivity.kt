@@ -3,25 +3,19 @@ package com.example.mlkitproject
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.ImageView
-import android.widget.Toast
 import android.widget.ToggleButton
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.mlkitproject.camera.CameraSource
-import com.example.mlkitproject.camera.CameraSourcePreview
-import com.example.mlkitproject.posedetector.PoseDetectorProcessor
-import com.example.mlkitproject.preference.PreferenceUtils
 import com.example.mlkitproject.preference.SettingsActivity
-import java.io.IOException
 
-class DetectPoseTestActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
+class DetectPoseActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -34,14 +28,22 @@ class DetectPoseTestActivity : AppCompatActivity(), CompoundButton.OnCheckedChan
             }
         }
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            val intent = Intent(this@DetectPoseActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pose_detect_test)
+        setContentView(R.layout.activity_pose_detect)
 
         onClickRequestPermission()
 
-        val intent = intent
-        val fragmentType = intent.getStringExtra("fragment_type")
+        val intentFromBeforeActivity = intent
+        val fragmentType = intentFromBeforeActivity.getStringExtra("fragment_type")
 
         if (fragmentType != null)
             setFragment(fragmentType)
@@ -58,6 +60,8 @@ class DetectPoseTestActivity : AppCompatActivity(), CompoundButton.OnCheckedChan
             )
             startActivity(intent)
         }
+
+        this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
@@ -65,8 +69,10 @@ class DetectPoseTestActivity : AppCompatActivity(), CompoundButton.OnCheckedChan
     }
 
     private fun setFragment(fragmentType: String) {
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
+
         if (fragmentType == "push_up") {
             val pushUpDetectFragment = PushUpDetectFragment()
             fragmentTransaction.replace(R.id.frame_layout, pushUpDetectFragment)
@@ -76,6 +82,7 @@ class DetectPoseTestActivity : AppCompatActivity(), CompoundButton.OnCheckedChan
             fragmentTransaction.replace(R.id.frame_layout, squatDetectFragment)
             fragmentTransaction.commit()
         }
+
     }
 
     // Request permission for using camera

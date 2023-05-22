@@ -8,12 +8,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.bumptech.glide.Glide
 import com.example.mlkitproject.camera.CameraSource
 import com.example.mlkitproject.camera.CameraSourcePreview
-import com.example.mlkitproject.camera.CameraUtils
 import com.example.mlkitproject.posedetector.PoseDetectorProcessor
 import com.example.mlkitproject.preference.PreferenceUtils
+import com.example.mlkitproject.viewmodel.CountViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 class SquatDetectFragment : Fragment() {
@@ -21,6 +31,8 @@ class SquatDetectFragment : Fragment() {
     private var cameraSource: CameraSource? = null
     private var preview: CameraSourcePreview? = null
     private var graphicOverlay: GraphicOverlay? = null
+    private val viewModel: CountViewModel by viewModels()
+    private var requiredCount: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,10 +45,13 @@ class SquatDetectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e(TAG, "onViewCreated")
-
         val countText = view.findViewById<TextView>(R.id.tx_count)
         val exerciseImg = view.findViewById<ImageView>(R.id.img_exercise)
+
+        Glide
+            .with(this)
+            .load(R.drawable.squat)
+            .into(exerciseImg)
 
         preview = view.findViewById(R.id.preview_view)
         if (preview == null) {
@@ -49,6 +64,29 @@ class SquatDetectFragment : Fragment() {
         }else {
             createCameraSource()
         }
+
+        viewModel.getCurrentSquatsCountValue()
+
+        viewModel.currentSquatsCount.observe(viewLifecycleOwner) { currentCount ->
+
+            if (currentCount == requiredCount) {
+
+                val dialog = CompleteDialogFragment.getInstance()
+                val bundle = Bundle()
+                bundle.putString("button_type", "next")
+                dialog.arguments = bundle
+
+                if (!dialog.isAdded) {
+                    dialog.show(requireActivity().supportFragmentManager.beginTransaction(), "workout complete dialog")
+                }
+
+            } else {
+                countText.text = currentCount.toString()
+            }
+
+        }
+
+        requiredCount = viewModel.requiredSquatCount
 
     }
 
@@ -113,15 +151,26 @@ class SquatDetectFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "onResume")
+        Log.e(TAG, "onResume")
         createCameraSource()
         startCameraSource()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.e(TAG, "onStop")
     }
 
     /** Stops the camera.  */
     override fun onPause() {
         super.onPause()
+        Log.e(TAG, "onPause")
         preview!!.stop()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.e(TAG, "onDestroyView")
     }
 
     override fun onDestroy() {
@@ -129,6 +178,7 @@ class SquatDetectFragment : Fragment() {
         if (cameraSource != null) {
             cameraSource!!.release()
         }
+        Log.e(TAG, "onDestroy")
     }
 
     companion object {

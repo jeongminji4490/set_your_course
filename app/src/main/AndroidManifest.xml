@@ -30,7 +30,7 @@
         </activity>
         <activity android:name=".DetectPoseActivity"/>
         <activity android:name=".preference.SettingsActivity"/>
-        <activity android:name=".DetectPoseTestActivity"/>
+        <activity android:name=".DetectPoseActivity"/>
         <activity
             android:name=".StartRoundActivity"
             android:theme="@style/Theme.Mlkitproject"/>

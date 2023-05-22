@@ -111,20 +111,21 @@ class PoseClassifierProcessor @WorkerThread constructor(context: Context, isStre
             for (repCounter in repCounters!!) {
                 val repsBefore = repCounter.numRepeats
                 val repsAfter = repCounter.addClassificationResult(classification)
+                Log.e("SquatDetectFragment - repsAfter", repsAfter.toString())
                 if (repsAfter > repsBefore) {
                     // Play a fun beep when rep counter updates.
                     val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
                     tg.startTone(ToneGenerator.TONE_PROP_BEEP)
 
                     when (repCounter.className) {
-                        PUSHUPS_CLASS -> {
-                            scope.launch {
-                                dataStore.setPushUpCount(repsAfter.toString())
-                            }
-                        }
                         SQUATS_CLASS -> {
                             scope.launch {
-                                dataStore.setSquatCount(repsAfter.toString())
+                                dataStore.setCurrentSquatCount(repsAfter)
+                            }
+                        }
+                        PUSHUPS_CLASS -> {
+                            scope.launch {
+                                dataStore.setCurrentPushUpCount(repsAfter)
                             }
                         }
                     }
