@@ -6,18 +6,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.mlkitproject.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.mlkitproject.viewmodel.CountViewModel
+import com.example.mlkitproject.viewmodel.RoundViewModel
 import java.lang.NumberFormatException
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var splashScreen: androidx.core.splashscreen.SplashScreen
-    private val dataStore = App.getInstance().getDataStore()
+    private val roundViewModel: RoundViewModel by viewModels()
+    private val countViewModel: CountViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,18 +80,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         squatCount: Int,
         pushUpCount: Int,
         round: String
-    ) = CoroutineScope(Dispatchers.Main).launch {
+    ) {
         if (squatCount == 0 || pushUpCount == 0) {
             Toast.makeText(this@MainActivity, "Please enter the count", Toast.LENGTH_SHORT).show()
         } else {
-            dataStore.run {
-                setSquatCount(squatCount)
-                setPushUpCount(pushUpCount)
-                setCurrentSquatCount(0)
-                setCurrentPushUpCount(0)
-                setRound(round)
-                setCurrentRound("1")
+            with(roundViewModel) {
+                setInitRound(round)
+                setCurrentRound(INIT_ROUND)
             }
+            with(countViewModel) {
+                setInitSquatCount(squatCount)
+                setInitPushUpCount(pushUpCount)
+                setCurrentSquatsCount(INIT_SQUAT_COUNT)
+                setCurrentPushUpCount(INIT_PUSH_UP_COUNT)
+            }
+
             val intent = Intent(this@MainActivity, StartRoundActivity::class.java)
             startActivity(intent)
         }
@@ -98,5 +102,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         private const val TAG = "MainActivity"
+        private const val INIT_ROUND = "1"
+        private const val INIT_SQUAT_COUNT = 0
+        private const val INIT_PUSH_UP_COUNT = 0
     }
 }

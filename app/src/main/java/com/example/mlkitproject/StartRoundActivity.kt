@@ -2,25 +2,21 @@ package com.example.mlkitproject
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.mlkitproject.viewmodel.CountViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.example.mlkitproject.databinding.ActivityStartRoundBinding
+import com.example.mlkitproject.viewmodel.RoundViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class StartRoundActivity : AppCompatActivity() {
 
-    private val dataStore = App.getInstance().getDataStore()
-    private val viewModel: CountViewModel by viewModels()
+    private lateinit var binding: ActivityStartRoundBinding
+
+    private lateinit var viewModel: RoundViewModel
     private var currentRound: String = ""
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -34,29 +30,36 @@ class StartRoundActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_start_round)
+        binding = ActivityStartRoundBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        val startText = findViewById<TextView>(R.id.tx_start)
-        val countText = findViewById<TextView>(R.id.tx_round_count)
-        countText.text = currentRound
+        viewModel = ViewModelProvider(this)[RoundViewModel::class.java]
 
         lifecycleScope.launch {
-
-            val setTextVisibleJob = launch {
-                delay(2000)
-                startText.visibility = TextView.VISIBLE
-            }
-
-            setTextVisibleJob.join()
-
-            val intent = Intent(this@StartRoundActivity, DetectPoseActivity::class.java)
-            intent.putExtra("fragment_type", "squat")
-            startActivity(intent)
-            finish()
+            setTextVisible()
         }
 
         currentRound = viewModel.currentRound
+        binding.txRoundCount.text = currentRound
         this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
 
+    private suspend fun setTextVisible() {
+        val setTextVisibleJob = lifecycleScope.launch {
+            delay(2000)
+            binding.txStart.visibility = TextView.VISIBLE
+        }
+
+        setTextVisibleJob.join()
+
+        goToDetectPoseActivity()
+    }
+
+    private fun goToDetectPoseActivity() {
+        val intent = Intent(this@StartRoundActivity, DetectPoseActivity::class.java)
+        intent.putExtra("fragment_type", "squat")
+        startActivity(intent)
+        finish()
     }
 }

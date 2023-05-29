@@ -82,26 +82,6 @@ class DataStoreModule(private val context: Context) {
         }
     }
 
-
-//    val squatCount : Flow<String> = context.dataStore.data
-//            .catch { exception ->
-//                if (exception is IOException) {
-//                    emit(emptyPreferences())
-//                } else {
-//                    throw exception
-//                }
-//            }
-//            .map {preferences ->
-//                preferences[squatCountKey] ?: ""
-//            }
-//
-//
-//    suspend fun setSquatCount(value: String) {
-//        context.dataStore.edit { preferences ->
-//            preferences[squatCountKey] = value
-//        }
-//    }
-
     val currentSquatCount : Flow<Int> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
@@ -140,23 +120,6 @@ class DataStoreModule(private val context: Context) {
         }
     }
 
-//    val pushUpCount : Flow<String> = context.dataStore.data
-//            .catch { exception ->
-//                if (exception is IOException) {
-//                    emit(emptyPreferences())
-//                } else {
-//                    throw exception
-//                }
-//            }
-//            .map {preferences ->
-//                preferences[pushUpCountKey] ?: ""
-//            }
-//
-//    suspend fun setPushUpCount(value: String) {
-//        context.dataStore.edit { preferences ->
-//            preferences[pushUpCountKey] = value
-//        }
-//    }
 
     val currentPushUpCount : Flow<Int> = context.dataStore.data
         .catch { exception ->

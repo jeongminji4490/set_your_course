@@ -9,15 +9,12 @@ import com.example.mlkitproject.DataStoreModule
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-class CountViewModel() : ViewModel() {
+class CountViewModel : ViewModel() {
 
-    // apply nullable to properties?
     private val dataStore: DataStoreModule = App.getInstance().getDataStore()
 
-    var currentRound: String = ""
-    var requiredRound: String = ""
-    var requiredSquatCount: Int = 0
-    var requiredPushUpCount: Int = 0
+    var initSquatCount: Int = 0
+    var initPushUpCount: Int = 0
 
     /**
      * Better to expose immutable types to other classes
@@ -32,40 +29,37 @@ class CountViewModel() : ViewModel() {
         get() =  _currentPushUpCount
 
     init {
-        getRequiredRound()
-        getCurrentRound()
-        getRequiredSquatCountValue()
-        getRequiredPushUpCountValue()
-    }
-
-    /**
-     * TODO
-     * I think I need to make setter, not only getter
-     * and it would be better to separate viewModel by features
-     */
-
-    private fun getRequiredRound() {
-        viewModelScope.launch {
-            requiredRound = dataStore.round.first()
-        }
-    }
-
-    private fun getCurrentRound() {
-        viewModelScope.launch {
-            currentRound = dataStore.currentRound.first()
-        }
+        getInitSquatCount()
+        getInitPushUpCount()
     }
 
     /**
      * ViewModel classes should prefer creating coroutines instead of exposing suspend functions to perform business logic
      */
-    private fun getRequiredSquatCountValue() {
+
+    /**
+     * Squat
+     */
+    @JvmName("setInitialCountForSquat")
+    fun setInitSquatCount(count: Int) {
         viewModelScope.launch {
-            requiredSquatCount = dataStore.squatCount.first()
+            dataStore.setSquatCount(count)
         }
     }
 
-    fun getCurrentSquatsCountValue() {
+    private fun getInitSquatCount() {
+        viewModelScope.launch {
+            initSquatCount = dataStore.squatCount.first()
+        }
+    }
+
+    fun setCurrentSquatsCount(count: Int) {
+        viewModelScope.launch {
+            dataStore.setCurrentSquatCount(count)
+        }
+    }
+
+    fun getCurrentSquatsCount() {
         viewModelScope.launch {
             dataStore.currentSquatCount.collect {
                 _currentSquatsCount.value = it
@@ -73,13 +67,29 @@ class CountViewModel() : ViewModel() {
         }
     }
 
-    private fun getRequiredPushUpCountValue() {
+    /**
+     * Push up
+     */
+    @JvmName("setInitialCountForPushUp")
+    fun setInitPushUpCount(count: Int) {
         viewModelScope.launch {
-            requiredPushUpCount = dataStore.pushUpCount.first()
+            dataStore.setPushUpCount(count)
         }
     }
 
-    fun getCurrentPushUpCountValue() {
+    private fun getInitPushUpCount() {
+        viewModelScope.launch {
+            initPushUpCount = dataStore.pushUpCount.first()
+        }
+    }
+
+    fun setCurrentPushUpCount(count: Int) {
+        viewModelScope.launch {
+            dataStore.setCurrentPushUpCount(count)
+        }
+    }
+
+    fun getCurrentPushUpCount() {
         viewModelScope.launch {
             dataStore.currentPushUpCount.collect {
                 _currentPushUpCount.value = it

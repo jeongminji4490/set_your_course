@@ -10,17 +10,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.mlkitproject.camera.CameraSource
 import com.example.mlkitproject.camera.CameraSourcePreview
 import com.example.mlkitproject.posedetector.PoseDetectorProcessor
 import com.example.mlkitproject.preference.PreferenceUtils
 import com.example.mlkitproject.viewmodel.CountViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import java.io.IOException
 
 class PushUpDetectFragment : Fragment() {
@@ -59,7 +54,7 @@ class PushUpDetectFragment : Fragment() {
             createCameraSource()
         }
 
-        viewModel.getCurrentPushUpCountValue()
+        viewModel.getCurrentPushUpCount()
 
         viewModel.currentPushUpCount.observe(viewLifecycleOwner) { currentCount ->
 
@@ -80,7 +75,7 @@ class PushUpDetectFragment : Fragment() {
 
         }
 
-        requiredCount = viewModel.requiredPushUpCount
+        requiredCount = viewModel.initPushUpCount
 
     }
 
