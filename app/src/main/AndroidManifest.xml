@@ -28,11 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetectPoseActivity"/>
-        <activity android:name=".preference.SettingsActivity"/>
-        <activity android:name=".DetectPoseActivity"/>
+        <activity android:name=".PoseActivity"/>
+        <activity android:name=".mlkit.preference.SettingsActivity"/>
+        <activity android:name=".PoseActivity"/>
         <activity
-            android:name=".StartRoundActivity"
+            android:name=".RoundActivity"
             android:theme="@style/Theme.Mlkitproject"/>
     </application>
 

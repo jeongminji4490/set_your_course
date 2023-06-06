@@ -9,6 +9,9 @@
     <string name="start">START</string>
     <string name="_start">START!</string>
     <string name="round">ROUND</string>
+    <string name="next">next</string>
+    <string name="finish">finish</string>
+    <string name="complete">Complete!</string>
     <string name="next_round">NEXT ROUND</string>
     <string name="finish_round">FINISH</string>
 

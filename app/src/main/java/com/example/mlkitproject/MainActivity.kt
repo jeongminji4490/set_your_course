@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // set user's initial setting (squat count, pushup count, course set)
     private fun setInitCourse(
         squatCount: Int,
         pushUpCount: Int,
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 setCurrentPushUpCount(INIT_COUNT)
             }
 
-            val intent = Intent(this@MainActivity, StartRoundActivity::class.java)
+            val intent = Intent(this@MainActivity, RoundActivity::class.java)
             startActivity(intent)
         }
     }

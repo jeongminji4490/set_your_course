@@ -5,16 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mlkitproject.App
-import com.example.mlkitproject.DataStoreModule
+import com.example.mlkitproject.datastore.CountDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+/**
+ * for save values related exercise count
+ * this viewmodel handles the business logics related to CountDataStore
+ * initCount -> initial count set by the user
+ * currentCount -> initial count set by the user
+ * these are used to check if the user completes the exercise
+ */
 class CountViewModel : ViewModel() {
 
-    private val dataStore: DataStoreModule = App.getInstance().getDataStore()
+    private val dataStore: CountDataStore = App.getInstance().getCountDataStore()
     private val dataStoreScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     var initSquatCount: Int = 0
@@ -65,9 +72,6 @@ class CountViewModel : ViewModel() {
      * ViewModel classes should prefer creating coroutines instead of exposing suspend functions to perform business logic
      */
 
-    /**
-     * Squat
-     */
     @JvmName("setInitialCountForSquat")
     fun setInitSquatCount(count: Int) {
         viewModelScope.launch {
@@ -75,19 +79,21 @@ class CountViewModel : ViewModel() {
         }
     }
 
-    fun setCurrentSquatsCount(count: Int) {
-        dataStoreScope.launch {
-            dataStore.setCurrentSquatCount(count)
-        }
-    }
-
-    /**
-     * Push up
-     */
     @JvmName("setInitialCountForPushUp")
     fun setInitPushUpCount(count: Int) {
         viewModelScope.launch {
             dataStore.setInitPushUpCount(count)
+        }
+    }
+
+    /**
+     * There is a problem with cancelling datastore's suspend function
+     * Because viewmodel instance is destroyed before the suspend function is executed
+     * So I applied custom scope that is not affected by viewmodel lifecycle
+     */
+    fun setCurrentSquatsCount(count: Int) {
+        dataStoreScope.launch {
+            dataStore.setCurrentSquatCount(count)
         }
     }
 
