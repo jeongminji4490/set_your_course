@@ -57,13 +57,11 @@ class SquatDetectFragment : Fragment() {
             createCameraSource()
         }
 
-        viewModel.getCurrentSquatsCount()
-
         viewModel.currentSquatsCount.observe(viewLifecycleOwner) { currentCount ->
 
             if (currentCount == requiredCount) {
 
-                val dialog = CompleteDialogFragment.getInstance()
+                val dialog = CompleteDialogFragment()
                 val bundle = Bundle()
                 bundle.putString("button_type", "next")
                 dialog.arguments = bundle
@@ -79,6 +77,7 @@ class SquatDetectFragment : Fragment() {
         }
 
         requiredCount = viewModel.initSquatCount
+        // Log.e("Jinnie_requiredCount(S)", requiredCount.toString())
 
     }
 
@@ -106,7 +105,8 @@ class SquatDetectFragment : Fragment() {
                     visualizeZ,
                     rescaleZ,
                     runClassification,  /* isStreamMode = */
-                    true
+                    true,
+                    "squats_down"
                 )
             )
         } catch (e: RuntimeException) {

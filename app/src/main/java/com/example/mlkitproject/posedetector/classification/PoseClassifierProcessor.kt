@@ -25,6 +25,7 @@ import com.example.mlkitproject.App
 import com.example.mlkitproject.DataStoreModule
 import com.google.common.base.Preconditions
 import com.google.mlkit.vision.pose.Pose
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,19 +37,26 @@ import java.util.Locale
 /**
  * Accepts a stream of [Pose] for classification and Rep counting.
  */
-class PoseClassifierProcessor @WorkerThread constructor(context: Context, isStreamMode: Boolean) {
+class PoseClassifierProcessor @WorkerThread constructor(
+    context: Context,
+    isStreamMode: Boolean,
+    exerciseType: String
+) {
 
     private val isStreamMode: Boolean
+    private val exerciseType: String
     private var emaSmoothing: EMASmoothing? = null
     private var repCounters: MutableList<RepetitionCounter>? = null
     private var poseClassifier: PoseClassifier? = null
     private var lastRepResult: String? = null
     private val dataStore: DataStoreModule = App.getInstance().getDataStore()
-    private val scope by lazy { CoroutineScope(Dispatchers.IO) }
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val scope by lazy { CoroutineScope(dispatcher) }
 
     init {
         Preconditions.checkState(Looper.myLooper() != Looper.getMainLooper())
         this.isStreamMode = isStreamMode
+        this.exerciseType = exerciseType
         if (isStreamMode) {
             emaSmoothing = EMASmoothing()
             repCounters = ArrayList()
@@ -111,13 +119,13 @@ class PoseClassifierProcessor @WorkerThread constructor(context: Context, isStre
             for (repCounter in repCounters!!) {
                 val repsBefore = repCounter.numRepeats
                 val repsAfter = repCounter.addClassificationResult(classification)
-                Log.e("SquatDetectFragment - repsAfter", repsAfter.toString())
+
                 if (repsAfter > repsBefore) {
                     // Play a fun beep when rep counter updates.
                     val tg = ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100)
                     tg.startTone(ToneGenerator.TONE_PROP_BEEP)
 
-                    when (repCounter.className) {
+                    when (exerciseType) {
                         SQUATS_CLASS -> {
                             scope.launch {
                                 dataStore.setCurrentSquatCount(repsAfter)
@@ -129,6 +137,19 @@ class PoseClassifierProcessor @WorkerThread constructor(context: Context, isStre
                             }
                         }
                     }
+
+//                    when (repCounter.className) {
+//                        SQUATS_CLASS -> {
+//                            scope.launch {
+//                                dataStore.setCurrentSquatCount(repsAfter)
+//                            }
+//                        }
+//                        PUSHUPS_CLASS -> {
+//                            scope.launch {
+//                                dataStore.setCurrentPushUpCount(repsAfter)
+//                            }
+//                        }
+//                    }
 
                     lastRepResult = String.format(
                         Locale.US, "%s : %d reps", repCounter.className, repsAfter

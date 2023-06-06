@@ -2,8 +2,10 @@ package com.example.mlkitproject
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +18,7 @@ class StartRoundActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStartRoundBinding
 
-    private lateinit var viewModel: RoundViewModel
+    private val viewModel: RoundViewModel by viewModels()
     private var currentRound: String = ""
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -33,8 +35,6 @@ class StartRoundActivity : AppCompatActivity() {
         binding = ActivityStartRoundBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        viewModel = ViewModelProvider(this)[RoundViewModel::class.java]
 
         lifecycleScope.launch {
             setTextVisible()
@@ -62,4 +62,5 @@ class StartRoundActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
 }

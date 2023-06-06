@@ -54,13 +54,11 @@ class PushUpDetectFragment : Fragment() {
             createCameraSource()
         }
 
-        viewModel.getCurrentPushUpCount()
-
         viewModel.currentPushUpCount.observe(viewLifecycleOwner) { currentCount ->
 
             if (currentCount == requiredCount) {
 
-                val dialog = CompleteDialogFragment.getInstance()
+                val dialog = CompleteDialogFragment()
                 val bundle = Bundle()
                 bundle.putString("button_type", "finish")
                 dialog.arguments = bundle
@@ -103,7 +101,8 @@ class PushUpDetectFragment : Fragment() {
                     visualizeZ,
                     rescaleZ,
                     runClassification,  /* isStreamMode = */
-                    true
+                    true,
+                    "pushups_down"
                 )
             )
         } catch (e: RuntimeException) {

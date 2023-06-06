@@ -11,22 +11,18 @@ class RoundViewModel : ViewModel() {
 
     private val dataStore: DataStoreModule = App.getInstance().getDataStore()
 
-    // would it be better to use this way .. ?
     var initRound: String = ""
         get() {
             viewModelScope.launch {
-                field = dataStore.round.first()
+                field = dataStore.initRound.first()
             }
             return field
         }
 
-    // change collect to first
     var currentRound: String = ""
         get() {
             viewModelScope.launch {
-                dataStore.currentRound.collect {
-                    field = it
-                }
+                field = dataStore.currentRound.first()
             }
             return field
         }
@@ -34,7 +30,7 @@ class RoundViewModel : ViewModel() {
     @JvmName("setUserInitRound")
     fun setInitRound(round: String) {
         viewModelScope.launch {
-            dataStore.setRound(round)
+            dataStore.setInitRound(round)
         }
     }
 

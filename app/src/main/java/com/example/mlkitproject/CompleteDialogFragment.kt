@@ -2,22 +2,28 @@ package com.example.mlkitproject
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.mlkitproject.databinding.FragmentCompleteDialogBinding
 import com.example.mlkitproject.viewmodel.CountViewModel
 import com.example.mlkitproject.viewmodel.RoundViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CompleteDialogFragment : DialogFragment(), View.OnClickListener {
 
     private lateinit var binding : FragmentCompleteDialogBinding
 
     private val countViewModel: CountViewModel by viewModels()
-    private lateinit var roundViewModel: RoundViewModel
+    private val roundViewModel: RoundViewModel by viewModels()
     private var requiredRound: String = ""
     private var currentRound: String = ""
 
@@ -33,8 +39,6 @@ class CompleteDialogFragment : DialogFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        roundViewModel = ViewModelProvider(this)[RoundViewModel::class.java]
 
         val btnType = arguments?.getString("button_type")
 
@@ -81,12 +85,6 @@ class CompleteDialogFragment : DialogFragment(), View.OnClickListener {
         this@CompleteDialogFragment.dismiss()
     }
 
-    private fun goToStartRoundActivity() {
-        val intent = Intent(requireActivity(), StartRoundActivity::class.java)
-        startActivity(intent)
-        this@CompleteDialogFragment.dismiss()
-    }
-
     private fun setNextRoundAndCount() {
         val nextRound = (currentRound.toInt() + 1).toString()
         roundViewModel.setCurrentRound(nextRound)
@@ -94,10 +92,13 @@ class CompleteDialogFragment : DialogFragment(), View.OnClickListener {
         countViewModel.setCurrentPushUpCount(INIT_COUNT)
     }
 
-    companion object {
-        private var dialogInstance: CompleteDialogFragment = CompleteDialogFragment()
-        fun getInstance() = dialogInstance
+    private fun goToStartRoundActivity() {
+        val intent = Intent(requireActivity(), StartRoundActivity::class.java)
+        startActivity(intent)
+        this@CompleteDialogFragment.dismiss()
+    }
 
+    companion object {
         const val INIT_COUNT = 0
     }
 

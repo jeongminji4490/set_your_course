@@ -91,8 +91,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             with(countViewModel) {
                 setInitSquatCount(squatCount)
                 setInitPushUpCount(pushUpCount)
-                setCurrentSquatsCount(INIT_SQUAT_COUNT)
-                setCurrentPushUpCount(INIT_PUSH_UP_COUNT)
+                setCurrentSquatsCount(INIT_COUNT)
+                setCurrentPushUpCount(INIT_COUNT)
             }
 
             val intent = Intent(this@MainActivity, StartRoundActivity::class.java)
@@ -103,7 +103,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
         private const val TAG = "MainActivity"
         private const val INIT_ROUND = "1"
-        private const val INIT_SQUAT_COUNT = 0
-        private const val INIT_PUSH_UP_COUNT = 0
+        private const val INIT_COUNT = 0
     }
 }

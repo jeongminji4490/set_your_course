@@ -1,10 +1,7 @@
-/*
- * Copyright GE Appliances, a Haier Company (Confidential). All rights reserved.
- */
-
 package com.example.mlkitproject
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -20,10 +17,10 @@ class DataStoreModule(private val context: Context) {
     private val Context.dataStore  by preferencesDataStore(name = "dataStore")
 
     private val currentRoundKey = stringPreferencesKey("current_round")
-    private val roundKey = stringPreferencesKey("round")
-    private val squatCountKey = intPreferencesKey("squat")
+    private val initRoundKey = stringPreferencesKey("round")
+    private val initSquatCountKey = intPreferencesKey("squat")
     private val currentSquatCountKey = intPreferencesKey("current_squat")
-    private val pushUpCountKey = intPreferencesKey("push_up")
+    private val initPushUpCountKey = intPreferencesKey("push_up")
     private val currentPushUpCountKey = intPreferencesKey("current_push_up")
 
     val currentRound : Flow<String> = context.dataStore.data
@@ -44,7 +41,7 @@ class DataStoreModule(private val context: Context) {
         }
     }
 
-    val round : Flow<String> = context.dataStore.data
+    val initRound : Flow<String> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
@@ -53,17 +50,17 @@ class DataStoreModule(private val context: Context) {
             }
         }
         .map { preferences ->
-            preferences[roundKey] ?: ""
+            preferences[initRoundKey] ?: ""
         }
 
-    suspend fun setRound(num: String) {
+    suspend fun setInitRound(num: String) {
         context.dataStore.edit { preferences ->
-            preferences[roundKey] = num
+            preferences[initRoundKey] = num
         }
     }
 
     // Squat initial count set by the user
-    val squatCount : Flow<Int> = context.dataStore.data
+    val initSquatCount : Flow<Int> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
@@ -72,13 +69,13 @@ class DataStoreModule(private val context: Context) {
             }
         }
         .map {preferences ->
-            preferences[squatCountKey] ?: 0
+            preferences[initSquatCountKey] ?: 0
         }
 
 
-    suspend fun setSquatCount(value: Int) {
+    suspend fun setInitSquatCount(value: Int) {
         context.dataStore.edit { preferences ->
-            preferences[squatCountKey] = value
+            preferences[initSquatCountKey] = value
         }
     }
 
@@ -102,7 +99,7 @@ class DataStoreModule(private val context: Context) {
     }
 
     // PushUp initial count set by the user
-    val pushUpCount : Flow<Int> = context.dataStore.data
+    val initPushUpCount : Flow<Int> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
@@ -111,12 +108,12 @@ class DataStoreModule(private val context: Context) {
             }
         }
         .map {preferences ->
-            preferences[pushUpCountKey] ?: 0
+            preferences[initPushUpCountKey] ?: 0
         }
 
-    suspend fun setPushUpCount(value: Int) {
+    suspend fun setInitPushUpCount(value: Int) {
         context.dataStore.edit { preferences ->
-            preferences[pushUpCountKey] = value
+            preferences[initPushUpCountKey] = value
         }
     }
 
