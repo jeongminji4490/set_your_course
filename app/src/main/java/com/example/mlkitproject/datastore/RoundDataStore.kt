@@ -10,12 +10,17 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
+/**
+ * @file RoundDataStore.kt
+ * @author jeongminji4490
+ * @brief This is the PreferencesDataStore class that saves target & current round
+ */
 class RoundDataStore(private val context: Context) {
 
     private val Context.dataStore  by preferencesDataStore(name = "roundDataStore")
 
     private val currentRoundKey = stringPreferencesKey("current_round")
-    private val initRoundKey = stringPreferencesKey("round")
+    private val targetRoundKey = stringPreferencesKey("round")
 
     val currentRound : Flow<String> = context.dataStore.data
         .catch { exception ->
@@ -35,7 +40,7 @@ class RoundDataStore(private val context: Context) {
         }
     }
 
-    val initRound : Flow<String> = context.dataStore.data
+    val targetRound : Flow<String> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
@@ -44,12 +49,12 @@ class RoundDataStore(private val context: Context) {
             }
         }
         .map { preferences ->
-            preferences[initRoundKey] ?: ""
+            preferences[targetRoundKey] ?: ""
         }
 
-    suspend fun setInitRound(num: String) {
+    suspend fun setTargetRound(num: String) {
         context.dataStore.edit { preferences ->
-            preferences[initRoundKey] = num
+            preferences[targetRoundKey] = num
         }
     }
 }

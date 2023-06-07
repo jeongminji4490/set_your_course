@@ -11,16 +11,21 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
+/**
+ * @file CountDataStore.kt
+ * @author jeongminji4490
+ * @brief This is the PreferencesDataStore class that saves target & current count
+ */
 class CountDataStore(private val context: Context) {
 
     private val Context.dataStore  by preferencesDataStore(name = "countDataStore")
 
-    private val initSquatCountKey = intPreferencesKey("squat")
+    private val targetSquatCountKey = intPreferencesKey("squat")
     private val currentSquatCountKey = intPreferencesKey("current_squat")
-    private val initPushUpCountKey = intPreferencesKey("push_up")
+    private val targetPushUpCountKey = intPreferencesKey("push_up")
     private val currentPushUpCountKey = intPreferencesKey("current_push_up")
 
-    val initSquatCount : Flow<Int> = context.dataStore.data
+    val targetSquatCount : Flow<Int> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
@@ -29,13 +34,13 @@ class CountDataStore(private val context: Context) {
             }
         }
         .map {preferences ->
-            preferences[initSquatCountKey] ?: 0
+            preferences[targetSquatCountKey] ?: 0
         }
 
 
-    suspend fun setInitSquatCount(value: Int) {
+    suspend fun setTargetSquatCount(value: Int) {
         context.dataStore.edit { preferences ->
-            preferences[initSquatCountKey] = value
+            preferences[targetSquatCountKey] = value
         }
     }
 
@@ -58,8 +63,7 @@ class CountDataStore(private val context: Context) {
         }
     }
 
-    // PushUp initial count set by the user
-    val initPushUpCount : Flow<Int> = context.dataStore.data
+    val targetPushUpCount : Flow<Int> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
                 emit(emptyPreferences())
@@ -68,12 +72,12 @@ class CountDataStore(private val context: Context) {
             }
         }
         .map {preferences ->
-            preferences[initPushUpCountKey] ?: 0
+            preferences[targetPushUpCountKey] ?: 0
         }
 
-    suspend fun setInitPushUpCount(value: Int) {
+    suspend fun setTargetPushUpCount(value: Int) {
         context.dataStore.edit { preferences ->
-            preferences[initPushUpCountKey] = value
+            preferences[targetPushUpCountKey] = value
         }
     }
 

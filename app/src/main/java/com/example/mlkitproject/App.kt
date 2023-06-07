@@ -4,6 +4,11 @@ import android.app.Application
 import com.example.mlkitproject.datastore.CountDataStore
 import com.example.mlkitproject.datastore.RoundDataStore
 
+/**
+ * @file App.kt
+ * @author jeongminji4490
+ * @brief This is Application class that initiates and returns datastore instance
+ */
 class App : Application() {
 
     private lateinit var roundDataStore: RoundDataStore

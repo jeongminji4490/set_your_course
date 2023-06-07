@@ -19,6 +19,11 @@ import com.example.mlkitproject.mlkit.preference.PreferenceUtils
 import com.example.mlkitproject.viewmodel.CountViewModel
 import java.io.IOException
 
+/**
+ * @file SquatFragment.kt
+ * @author jeongminji4490
+ * @brief This is the SquatFragment that detect user's squat pose and calculate count if user has the correct pose
+ */
 class SquatFragment : Fragment() {
 
     private var cameraSource: CameraSource? = null
@@ -77,7 +82,7 @@ class SquatFragment : Fragment() {
 
         }
 
-        requiredCount = viewModel.initSquatCount
+        requiredCount = viewModel.targetSquatCount
 
     }
 

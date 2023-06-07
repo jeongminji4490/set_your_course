@@ -13,6 +13,11 @@ import com.example.mlkitproject.viewmodel.CountViewModel
 import com.example.mlkitproject.viewmodel.RoundViewModel
 import java.lang.NumberFormatException
 
+/**
+ * @file MainActivity.kt
+ * @author jeongminji4490
+ * @brief This is the main activity that user can set initial settings (exercise count, the number of set)
+ */
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
@@ -90,8 +95,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 setCurrentRound(INIT_ROUND)
             }
             with(countViewModel) {
-                setInitSquatCount(squatCount)
-                setInitPushUpCount(pushUpCount)
+                setTargetSquatCount(squatCount)
+                setTargetPushUpCount(pushUpCount)
                 setCurrentSquatsCount(INIT_COUNT)
                 setCurrentPushUpCount(INIT_COUNT)
             }

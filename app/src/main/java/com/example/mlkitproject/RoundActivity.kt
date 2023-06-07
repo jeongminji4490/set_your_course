@@ -13,7 +13,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * display current round
+ * @file RoundActivity.kt
+ * @author jeongminji4490
+ * @brief This is the RoundActivity that display current round
  */
 class RoundActivity : AppCompatActivity() {
 
@@ -47,6 +49,7 @@ class RoundActivity : AppCompatActivity() {
     }
 
     /**
+     * @Note
      * ui event : the specific text is displayed after 2 seconds
      * and after the job is completed, move to the next screen
      * I use coroutine to handle this event

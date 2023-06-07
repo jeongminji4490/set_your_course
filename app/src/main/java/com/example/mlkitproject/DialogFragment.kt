@@ -12,7 +12,9 @@ import com.example.mlkitproject.viewmodel.CountViewModel
 import com.example.mlkitproject.viewmodel.RoundViewModel
 
 /**
- * when the user has completed exercise, this dialog is displayed
+ * @file DialogFragment.kt
+ * @author jeongminji4490
+ * @brief This is the DialogFragment that is displayed when the user has completed exercise
  */
 class DialogFragment : DialogFragment(), View.OnClickListener {
 

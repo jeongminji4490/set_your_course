@@ -8,11 +8,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
- * for save values related to round
- * this viewmodel handles the business logics related to RoundDataStore
- * initRound -> initial round set by the user
- * current Round -> round that the user is currently in
- * these values are used to check that the current round is next one or final one
+ * @file RoundViewModel.kt
+ * @author jeongminji4490
+ * @brief this is the viewmodel class that handles the business logics related to RoundDataStore
  */
 class RoundViewModel : ViewModel() {
 
@@ -21,7 +19,7 @@ class RoundViewModel : ViewModel() {
     var initRound: String = ""
         get() {
             viewModelScope.launch {
-                field = dataStore.initRound.first()
+                field = dataStore.targetRound.first()
             }
             return field
         }
@@ -37,7 +35,7 @@ class RoundViewModel : ViewModel() {
     @JvmName("setUserInitRound")
     fun setInitRound(round: String) {
         viewModelScope.launch {
-            dataStore.setInitRound(round)
+            dataStore.setTargetRound(round)
         }
     }
 

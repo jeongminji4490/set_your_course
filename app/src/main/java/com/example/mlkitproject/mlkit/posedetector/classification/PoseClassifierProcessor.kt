@@ -138,19 +138,6 @@ class PoseClassifierProcessor @WorkerThread constructor(
                         }
                     }
 
-//                    when (repCounter.className) {
-//                        SQUATS_CLASS -> {
-//                            scope.launch {
-//                                dataStore.setCurrentSquatCount(repsAfter)
-//                            }
-//                        }
-//                        PUSHUPS_CLASS -> {
-//                            scope.launch {
-//                                dataStore.setCurrentPushUpCount(repsAfter)
-//                            }
-//                        }
-//                    }
-
                     lastRepResult = String.format(
                         Locale.US, "%s : %d reps", repCounter.className, repsAfter
                     )

@@ -16,11 +16,10 @@ import androidx.core.content.ContextCompat
 import com.example.mlkitproject.mlkit.preference.SettingsActivity
 
 /**
- * Host Activity for both fragments (SquatDetectFragment, PushUpDetectFragment)
- * the exercise sequence is from squat to pushup
- * so the first fragment is always SquatFragment, and the PushUpFragment is always second
+ * @file PoseActivity.kt
+ * @author jeongminji4490
+ * @brief This is the Host Activity for both fragments (SquatDetectFragment, PushUpDetectFragment)
  */
-
 class PoseActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
 
     private val requestPermissionLauncher =
@@ -121,12 +120,16 @@ class PoseActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
 }
 
 /**
- * Note
- * this activity determines which fragment should be displayed as the intent value
- * as I wrote in the above comment, the exercise sequence is always squat to pushup
- * actually there is no need to use intent value, because the sequence would always be the same
- * so it could just move from SquatFragment to PushupFragment without using an intent value
- * but when the user has completed the 1 course, DialogFragment is displayed, and The dialog button determines whether move to PushUpFragment or RoundActivity
+ * @Note #1
+ * The exercise sequence is from squat to pushup
+ * So the first fragment is always SquatFragment, and the PushUpFragment is always second
+ *
+ * @Note #2
+ * This activity determines which fragment should be displayed as the intent value
+ * As I wrote in the above comment, the exercise sequence is always squat to pushup
+ * Actually there is no need to use intent value, because the sequence would always be the same
+ * So it could just move from SquatFragment to PushupFragment without using an intent value
+ * But when the user has completed 1 course, DialogFragment is displayed, and The dialog button determines whether move to PushUpFragment or PoseActivity
  * If I implement it to move to the next fragment directly without moving to the host activity in DialogFragment, the source code can be complicated and readability can be reduced
  * Therefore, it is more efficient to move from DialogFragment to the host activity, and to determine which child fragment to move to by the intent value
  */

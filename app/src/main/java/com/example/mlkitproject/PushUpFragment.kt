@@ -19,6 +19,11 @@ import com.example.mlkitproject.mlkit.preference.PreferenceUtils
 import com.example.mlkitproject.viewmodel.CountViewModel
 import java.io.IOException
 
+/**
+ * @file PushUpFragment.kt
+ * @author jeongminji4490
+ * @brief This is the PushUpFragment that detect user's pushup pose and calculate count if user has the correct pose
+ */
 class PushUpFragment : Fragment() {
 
     private var cameraSource: CameraSource? = null
@@ -74,7 +79,7 @@ class PushUpFragment : Fragment() {
 
         }
 
-        requiredCount = viewModel.initPushUpCount
+        requiredCount = viewModel.targetPushUpCount
 
     }
 

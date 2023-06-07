@@ -13,28 +13,26 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
- * for save values related exercise count
- * this viewmodel handles the business logics related to CountDataStore
- * initCount -> initial count set by the user
- * currentCount -> initial count set by the user
- * these are used to check if the user completes the exercise
+ * @file CountViewModel.kt
+ * @author jeongminji4490
+ * @brief this is the viewmodel class that handles the business logics related to CountDataStore
  */
 class CountViewModel : ViewModel() {
 
     private val dataStore: CountDataStore = App.getInstance().getCountDataStore()
-    private val dataStoreScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val dataStoreScope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.IO) }
 
-    var initSquatCount: Int = 0
+    var targetSquatCount: Int = 0
         get() {
             viewModelScope.launch {
-                field = dataStore.initSquatCount.first()
+                field = dataStore.targetSquatCount.first()
             }
             return field
         }
-    var initPushUpCount: Int = 0
+    var targetPushUpCount: Int = 0
         get() {
             viewModelScope.launch {
-                field = dataStore.initPushUpCount.first()
+                field = dataStore.targetPushUpCount.first()
             }
             return field
         }
@@ -71,25 +69,25 @@ class CountViewModel : ViewModel() {
     /**
      * ViewModel classes should prefer creating coroutines instead of exposing suspend functions to perform business logic
      */
-
-    @JvmName("setInitialCountForSquat")
-    fun setInitSquatCount(count: Int) {
+    @JvmName("setTargetCountForSquat")
+    fun setTargetSquatCount(count: Int) {
         viewModelScope.launch {
-            dataStore.setInitSquatCount(count)
+            dataStore.setTargetSquatCount(count)
         }
     }
 
-    @JvmName("setInitialCountForPushUp")
-    fun setInitPushUpCount(count: Int) {
+    @JvmName("setTargetCountForPushUp")
+    fun setTargetPushUpCount(count: Int) {
         viewModelScope.launch {
-            dataStore.setInitPushUpCount(count)
+            dataStore.setTargetPushUpCount(count)
         }
     }
 
     /**
-     * There is a problem with cancelling datastore's suspend function
-     * Because viewmodel instance is destroyed before the suspend function is executed
-     * So I applied custom scope that is not affected by viewmodel lifecycle
+     * @Note
+     * There was a problem with cancelling datastore's suspend function
+     * Because viewmodel instance is destroyed before the datastore's suspend function is executed
+     * So I applied the custom scope that is not affected by viewmodel lifecycle
      */
     fun setCurrentSquatsCount(count: Int) {
         dataStoreScope.launch {
