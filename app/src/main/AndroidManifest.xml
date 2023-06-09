@@ -30,7 +30,6 @@
         </activity>
         <activity android:name=".PoseActivity"/>
         <activity android:name=".mlkit.preference.SettingsActivity"/>
-        <activity android:name=".PoseActivity"/>
         <activity
             android:name=".RoundActivity"
             android:theme="@style/Theme.Mlkitproject"/>

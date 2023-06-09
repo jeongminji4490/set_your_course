@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="300dp"
         android:layout_height="400dp"
-        android:background="@color/deep_salmon">
+        android:background="@color/deep_violet">
 
         <TextView
             android:id="@+id/tx_complete_dialog"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:text="@string/next_round"
-            android:textColor="@color/deep_salmon"
+            android:textColor="@color/deep_violet"
             android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:text="@string/finish_round"
-            android:textColor="@color/deep_salmon"
+            android:textColor="@color/deep_violet"
             android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

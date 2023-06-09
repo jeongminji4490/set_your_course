@@ -35,7 +35,7 @@
             app:layout_constraintStart_toEndOf="@id/tx_exercise_type"
             android:text="0"
             android:textSize="25dp"
-            android:textColor="@color/deep_salmon"
+            android:textColor="@color/deep_violet"
             android:textStyle="bold"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

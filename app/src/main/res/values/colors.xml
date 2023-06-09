@@ -2,8 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="vivid_red">#FF3003</color>
-    <color name="deep_salmon">#FE646F</color>
-    <color name="salmon_pink">#FE99A0</color>
-    <color name="violet">#DD99EB</color>
+    <color name="lavender">#DAA9FC</color>
+    <color name="deep_violet">#CD85FF</color>
 </resources>
