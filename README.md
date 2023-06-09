@@ -1,3 +1,5 @@
+![제목을-입력해주세요_-001 (1)](https://github.com/jeongminji4490/set_your_course/assets/62979330/8e3ae83d-ceaf-47ce-b80e-7183f4e263be)
+
 <div align="left">
   <h1>Set Your Course</h1>
 </div>
@@ -12,18 +14,18 @@ MLKit is a mobile-optimized machine learning package developed by Google to make
 
 In this app, __I used MLKit Sample Quickstart app for the pose detection__. I applied pose detection parts of the sample app to this app and used it to detect the user's exercise pose in real time
 
-### Note
+### ✅ Note
 
-_While applying MLKit Pose Detection feature to this app_
+_While applying MLKit Pose Detection feature to this app..._
 
 - __To code compatibility__, I changed some code of sample app from Java to Kotlin
 - __To add functionality and improve the UI__, I changed some code of sample app
 
-### Documentation
+### References 
+#### Documentation
 [MLKit Pose Detection](https://developers.google.com/ml-kit/vision/pose-detection)
-
-### MLKit Sample Quickstart app for the pose detection
-[Github Repository](https://github.com/googlesamples/mlkit/tree/master/android/vision-quickstart)
+#### Github
+[MLKit Sample Quickstart app](https://github.com/googlesamples/mlkit/tree/master/android/vision-quickstart)
 
 ##
 
@@ -35,7 +37,7 @@ _While applying MLKit Pose Detection feature to this app_
 + Kotlin 1.8.0
 
 ### Application Version
-+ minSdkVersion 24
++ minSdkVersion 26
 + targetSdkVersion 33
 
 ### Libraries
@@ -43,8 +45,6 @@ _While applying MLKit Pose Detection feature to this app_
   + ViewModel, LiveData, DataStore, CameraX
 + __Asynchronous programming__
   + Coroutine 
-+ __Asynchronous programming__
-  + Coroutine
 + __Image__
   + Glide
 + __ETC__
@@ -54,7 +54,7 @@ _While applying MLKit Pose Detection feature to this app_
 
 ### Functions
 
-#### Note
+#### ❗Note
 
 When you run this app for the first time, in the pose detection screen, turn on `Run classification` through the settings button on the bottom bar (**your exercise pose cannot be detected unless you turn it on**)
 
@@ -64,5 +64,18 @@ When you run this app for the first time, in the pose detection screen, turn on 
 
 ### 2. Exercise Pose Detection Screen
 
-- In this screen, your exercise pose is detected and counted
+- In this screen, your exercise pose is detected and counted through camera
 - When you have completed your target count, you move on to the next exercise screen or start the next set. Once you've completed all sets, you'll return to the main screen.
+
+
+## Version Test
+|API Level|Test|
+|------|---|
+|33|OK|
+|32|OK|
+|31|OK|
+|30|OK|
+|29|OK|
+|28|OK|
+|27|OK|
+|26|OK|
