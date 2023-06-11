@@ -27,7 +27,11 @@ _While applying MLKit Pose Detection feature to this app..._
 #### Github
 [MLKit Sample Quickstart app](https://github.com/googlesamples/mlkit/tree/master/android/vision-quickstart)
 
-##
+
+
+<div align="left">
+  <h1>Project Information</h1>
+</div>
 
 ### Project Type
 + Toy project
@@ -49,10 +53,10 @@ _While applying MLKit Pose Detection feature to this app..._
   + Glide
 + __ETC__
   + MLKit Pose Detection
-  
-##
 
-### Functions
+<div align="left">
+  <h1>Functions</h1>
+</div>
 
 #### ❗Note
 
@@ -65,10 +69,13 @@ When you run this app for the first time, in the pose detection screen, turn on 
 ### 2. Exercise Pose Detection Screen
 
 - In this screen, your exercise pose is detected and counted through camera
-- When you have completed your target count, you move on to the next exercise screen or start the next set. Once you've completed all sets, you'll return to the main screen.
+- When you have completed your target count, you move on to the next exercise screen or start the next set. Once you've completed all sets, you'll return to the main screen
+
+<div align="left">
+  <h1>Version Test</h1>
+</div>
 
 
-## Version Test
 |API Level|Test|
 |------|---|
 |33|OK|
